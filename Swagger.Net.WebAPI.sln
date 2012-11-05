@@ -18,6 +18,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Mvc4WebApi", "Sample
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.Mvc4WebApi._Tests", "Sample.Mvc4WebApi._Tests\Sample.Mvc4WebApi._Tests.csproj", "{0BA2C10A-A0F1-4F26-BB76-5F0A8556E32B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.OAuth1", "Sample.OAuth1\Sample.OAuth1.csproj", "{399F93A1-B400-4CD6-9BCE-91B207D0D8DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.OAuth1._Tests", "Sample.OAuth1._Tests\Sample.OAuth1._Tests.csproj", "{0F4405E5-E938-4C96-AF35-469014DB4247}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Swagger.Net.WebAPI.vsmdi
@@ -43,6 +47,14 @@ Global
 		{0BA2C10A-A0F1-4F26-BB76-5F0A8556E32B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BA2C10A-A0F1-4F26-BB76-5F0A8556E32B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BA2C10A-A0F1-4F26-BB76-5F0A8556E32B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{399F93A1-B400-4CD6-9BCE-91B207D0D8DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{399F93A1-B400-4CD6-9BCE-91B207D0D8DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{399F93A1-B400-4CD6-9BCE-91B207D0D8DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{399F93A1-B400-4CD6-9BCE-91B207D0D8DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F4405E5-E938-4C96-AF35-469014DB4247}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F4405E5-E938-4C96-AF35-469014DB4247}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F4405E5-E938-4C96-AF35-469014DB4247}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F4405E5-E938-4C96-AF35-469014DB4247}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
