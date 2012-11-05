@@ -173,6 +173,8 @@
     <Content Include="SwaggerUI\lib\jquery.min.js" />
     <Content Include="SwaggerUI\lib\jquery.slideto.min.js" />
     <Content Include="SwaggerUI\lib\jquery.wiggle.min.js" />
+    <Content Include="SwaggerUI\lib\jsOAuth-1.3.6.js" />
+    <Content Include="SwaggerUI\lib\secrets.js" />
     <Content Include="SwaggerUI\lib\swagger.js" />
     <Content Include="SwaggerUI\lib\underscore-min.js" />
     <Content Include="SwaggerUI\swagger-ui.js" />

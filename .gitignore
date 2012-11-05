@@ -28,3 +28,4 @@ _ReSharper*/
 packages/
 !nuget.exe
 FakesAssemblies/
+Sample.Mvc4WebApi/SwaggerUI/lib/secrets.js
