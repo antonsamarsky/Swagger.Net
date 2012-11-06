@@ -266,7 +266,7 @@ exports.OAuth = (function (global) {
                 enablePrivilege: options.enablePrivilege || false,
 
                 proxyUrl: options.proxyUrl,
-                callbackUrl: options.callbackUrl || 'oob',
+                //callbackUrl: options.callbackUrl || 'oob',
 
                 consumerKey: options.consumerKey,
                 consumerSecret: options.consumerSecret,
@@ -584,7 +584,7 @@ exports.OAuth = (function (global) {
 
         fetchAccessToken: function (success, failure) {
             var oauth = this;
-            this.get(this.accessTokenUrl, function (data) {
+            this.post(this.accessTokenUrl, '', function (data) {
                 var token = oauth.parseTokenRequest(data, data.responseHeaders['Content-Type'] || undefined);
                 oauth.setAccessToken([token.oauth_token, token.oauth_token_secret]);
 
@@ -642,7 +642,7 @@ exports.OAuth = (function (global) {
             arr.unshift(realm);
         }
 
-        return arr.join(', ');
+        return arr.join(',');
     }
 
     /**
