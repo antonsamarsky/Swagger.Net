@@ -214,9 +214,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SwaggerUI\lib\.DS_Store" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Swagger.Net\Swagger.Net.csproj">
       <Project>{23F318E4-D42F-484E-9C5A-41B652145CF0}</Project>
       <Name>Swagger.Net</Name>

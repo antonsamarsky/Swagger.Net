@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using System.Web.Http.Filters;
+using System.Web.Http.Routing;
 using Swagger.Net.Factories;
 using Swagger.Net.Models;
 
@@ -18,62 +19,53 @@ namespace Swagger.Net
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
     public sealed class SwaggerActionFilterAttribute : ActionFilterAttribute
     {
-        #region --- fields & ctors ---
-        
-        private readonly ResourceMetadataFactory _factory;
-
-        public SwaggerActionFilterAttribute()
+        private ResourceMetadataFactory _factory;
+        public ResourceMetadataFactory Factory
         {
-            _factory = new ResourceMetadataFactory();   
+            get { return _factory ?? (_factory = new ResourceMetadataFactory()); }
+            set { _factory = value; }
         }
 
-        public SwaggerActionFilterAttribute(ResourceMetadataFactory factory)
-        {
-            _factory = factory;
-        }
-
-        #endregion // --- fields & ctors ---
-
-        // Intercept all request and handle swagger requests or pass through
+        // Intercept all request and handle swagger requests
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
-            if (IsDocRequest(actionContext))
-            {
-
-                // Arrange
-                var rootUrl = actionContext.Request.RequestUri.GetLeftPart(UriPartial.Authority);
-                var ctlrName = actionContext.ControllerContext.ControllerDescriptor.ControllerName;
-
-                // Act
-                var docs = _factory.GetDocs(rootUrl, ctlrName);
-
-                // Answer
-                var formatter = actionContext.ControllerContext.Configuration.Formatters.JsonFormatter;
-                var response = WrapResponse(formatter, docs);
-
-                actionContext.Response = response;
-            }
-            else
+            if (!Helper.IsDocRequest(actionContext.ControllerContext.RouteData))
             {
                 base.OnActionExecuting(actionContext);
+                return;
             }
+
+            // Arrange
+            var rootUrl = actionContext.Request.RequestUri.GetLeftPart(UriPartial.Authority);
+            var ctlrName = actionContext.ControllerContext.ControllerDescriptor.ControllerName;
+
+            // Act
+            var docs = _factory.GetDocs(rootUrl, ctlrName);
+
+            // Answer
+            var formatter = actionContext.ControllerContext.Configuration.Formatters.JsonFormatter;
+            var response = Helper.WrapResponse(formatter, docs);
+
+            actionContext.Response = response;
+
         }
 
-        #region --- helpers ---
-
-        private bool IsDocRequest(HttpActionContext actionContext)
+        private static class Helper
         {
-            var containsSwaggerKey = actionContext.ControllerContext.RouteData.Values.ContainsKey(G.SWAGGER);
-            return containsSwaggerKey;
-        }
 
-        private static HttpResponseMessage WrapResponse(JsonMediaTypeFormatter formatter, ResourceDescription docs)
-        {
-            var responseContent = new ObjectContent<ResourceDescription>(docs, formatter);
-            var response = new HttpResponseMessage { Content = responseContent };
-            return response;
-        }
+            public static bool IsDocRequest(IHttpRouteData routeData)
+            {
+                var containsSwaggerKey = routeData.Values.ContainsKey(G.SWAGGER);
+                return containsSwaggerKey;
+            }
 
-        #endregion // --- helpers ---
+            public static HttpResponseMessage WrapResponse(JsonMediaTypeFormatter formatter, ResourceDescription docs)
+            {
+                var responseContent = new ObjectContent<ResourceDescription>(docs, formatter);
+                var response = new HttpResponseMessage { Content = responseContent };
+                return response;
+            }
+
+        }
     }
 }
