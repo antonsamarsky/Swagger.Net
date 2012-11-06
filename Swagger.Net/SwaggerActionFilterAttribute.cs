@@ -40,7 +40,7 @@ namespace Swagger.Net
             var ctlrName = actionContext.ControllerContext.ControllerDescriptor.ControllerName;
 
             // Act
-            var docs = _factory.GetDocs(rootUrl, ctlrName);
+            var docs = this.Factory.GetDocs(rootUrl, ctlrName);
 
             // Answer
             var formatter = actionContext.ControllerContext.Configuration.Formatters.JsonFormatter;
