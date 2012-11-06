@@ -8,9 +8,9 @@ using System.Web.Http.Dispatcher;
 using System.Web.Routing;
 using Swagger.Net;
 
-[assembly: WebActivator.PreApplicationStartMethod(typeof(Sample.Mvc4WebApi.App_Start.SwaggerNet), "PreStart")]
-[assembly: WebActivator.PostApplicationStartMethod(typeof(Sample.Mvc4WebApi.App_Start.SwaggerNet), "PostStart")]
-namespace Sample.Mvc4WebApi.App_Start
+[assembly: WebActivator.PreApplicationStartMethod(typeof(Sample.Mvc4WebApi.SwaggerNet), "PreStart")]
+[assembly: WebActivator.PostApplicationStartMethod(typeof(Sample.Mvc4WebApi.SwaggerNet), "PostStart")]
+namespace Sample.Mvc4WebApi
 {
     public static class SwaggerNet
     {
