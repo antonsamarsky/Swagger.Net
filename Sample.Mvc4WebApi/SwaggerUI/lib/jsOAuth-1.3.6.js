@@ -1,9 +1,9 @@
 /**
-*  @license
-*  jsOAuth version 1.3.6
-*  Copyright (c) 2010, 2011 Rob Griffiths (http://bytespider.eu)
-*  jsOAuth is freely distributable under the terms of an MIT-style license.
-*/
+ *  @license
+ *  jsOAuth version 1.3.6
+ *  Copyright (c) 2010, 2011 Rob Griffiths (http://bytespider.eu)
+ *  jsOAuth is freely distributable under the terms of an MIT-style license.
+ */
 var exports = exports || this;
 exports.OAuth = (function (global) {
 
@@ -17,7 +17,7 @@ exports.OAuth = (function (global) {
             return new args_callee(obj);
         }
 
-        for (i in obj) {
+        for(i in obj) {
             if (obj.hasOwnProperty(i)) {
                 collection[i] = obj[i];
             }
@@ -26,13 +26,13 @@ exports.OAuth = (function (global) {
         return collection;
     }
 
-    function Hash() { }
+    function Hash() {}
     Hash.prototype = {
-        join: function (string) {
+        join: function(string){
             string = string || '';
             return this.values().join(string);
         },
-        keys: function () {
+        keys: function(){
             var i, arr = [], self = this;
             for (i in self) {
                 if (self.hasOwnProperty(i)) {
@@ -42,7 +42,7 @@ exports.OAuth = (function (global) {
 
             return arr;
         },
-        values: function () {
+        values: function(){
             var i, arr = [], self = this;
             for (i in self) {
                 if (self.hasOwnProperty(i)) {
@@ -52,13 +52,13 @@ exports.OAuth = (function (global) {
 
             return arr;
         },
-        shift: function () { throw 'not implimented'; },
-        unshift: function () { throw 'not implimented'; },
-        push: function () { throw 'not implimented'; },
-        pop: function () { throw 'not implimented'; },
-        sort: function () { throw 'not implimented'; },
+        shift: function(){throw 'not implimented';},
+        unshift: function(){throw 'not implimented';},
+        push: function(){throw 'not implimented';},
+        pop: function(){throw 'not implimented';},
+        sort: function(){throw 'not implimented';},
 
-        ksort: function (func) {
+        ksort: function(func){
             var self = this, keys = self.keys(), i, value, key;
 
             if (func == undefined) {
@@ -67,7 +67,7 @@ exports.OAuth = (function (global) {
                 keys.sort(func);
             }
 
-            for (i = 0; i < keys.length; i++) {
+            for (i = 0; i  < keys.length; i++) {
                 key = keys[i];
                 value = self[key];
                 delete self[key];
@@ -89,11 +89,11 @@ exports.OAuth = (function (global) {
     };
     Collection.prototype = new Hash;
     /**
-    * Url
-    *
-    * @constructor
-    * @param {String} url
-    */
+     * Url
+     *
+     * @constructor
+     * @param {String} url
+     */
     function URI(url) {
         var args = arguments, args_callee = args.callee,
             parsed_uri, scheme, host, port, path, query, anchor,
@@ -157,11 +157,11 @@ exports.OAuth = (function (global) {
     };
 
     /**
-    * Create and manage a query string
-    *
-    * @param {Object} obj
-    */
-    function QueryString(obj) {
+     * Create and manage a query string
+     *
+     * @param {Object} obj
+     */
+    function QueryString(obj){
         var args = arguments, args_callee = args.callee, args_length = args.length,
             i, querystring = this, decode = OAuth.urlDecode;
 
@@ -204,9 +204,9 @@ exports.OAuth = (function (global) {
     };
 
     /**
-    *
-    * @param {Object} query
-    */
+     *
+     * @param {Object} query
+     */
     QueryString.prototype.setQueryParams = function (query) {
         var args = arguments, args_length = args.length, i, query_array,
             query_array_length, querystring = this, key_value, decode = OAuth.urlDecode;
@@ -234,18 +234,18 @@ exports.OAuth = (function (global) {
         } else {
             for (i = 0; i < args_length; i += 2) {
                 // treat each arg as key, then value
-                querystring[args[i]] = decode(args[i + 1]);
+                querystring[args[i]] = decode(args[i+1]);
             }
         }
     };
 
-    /** @const */var OAUTH_VERSION_1_0 = '1.0';
+    /** @const */ var OAUTH_VERSION_1_0 = '1.0';
 
     /**
-    * OAuth
-    *
-    * @constructor
-    */
+     * OAuth
+     *
+     * @constructor
+     */
     function OAuth(options) {
         if (!(this instanceof OAuth)) {
             return new OAuth(options);
@@ -266,7 +266,7 @@ exports.OAuth = (function (global) {
                 enablePrivilege: options.enablePrivilege || false,
 
                 proxyUrl: options.proxyUrl,
-                //callbackUrl: options.callbackUrl || 'oob',
+                callbackUrl: options.callbackUrl || 'oob',
 
                 consumerKey: options.consumerKey,
                 consumerSecret: options.consumerSecret,
@@ -314,18 +314,18 @@ exports.OAuth = (function (global) {
             };
 
             /**
-            * Makes an authenticated http request
-            *
-            * @param options {object}
-            *      method {string} ['GET', 'POST', 'PUT', ...]
-            *      url {string} A valid http(s) url
-            *      data {object} A key value paired object of data
-            *                      example: {'q':'foobar'}
-            *                      for GET this will append a query string
-            *      headers {object} A key value paired object of additional headers
-            *      success {function} callback for a sucessful request
-            *      failure {function} callback for a failed request
-            */
+             * Makes an authenticated http request
+             *
+             * @param options {object}
+             *      method {string} ['GET', 'POST', 'PUT', ...]
+             *      url {string} A valid http(s) url
+             *      data {object} A key value paired object of data
+             *                      example: {'q':'foobar'}
+             *                      for GET this will append a query string
+             *      headers {object} A key value paired object of additional headers
+             *      success {function} callback for a sucessful request
+             *      failure {function} callback for a failed request
+             */
             this.request = function (options) {
                 var method, url, data, headers, success, failure, xhr, i,
                     headerParams, signatureMethod, signatureString, signature,
@@ -335,16 +335,16 @@ exports.OAuth = (function (global) {
                 url = URI(options.url);
                 data = options.data || {};
                 headers = options.headers || {};
-                success = options.success || function () { };
-                failure = options.failure || function () { };
+                success = options.success || function () {};
+                failure = options.failure || function () {};
 
                 // According to the spec
-                withFile = (function () {
+                withFile = (function(){
                     var hasFile = false;
-                    for (var name in data) {
+                    for(var name in data) {
                         // Thanks to the FileAPI any file entry
                         // has a fileName property
-                        if (data[name] instanceof File || typeof data[name].fileName != 'undefined') hasFile = true;
+                        if(data[name] instanceof  File || typeof data[name].fileName != 'undefined') hasFile = true;
                     }
 
                     return hasFile;
@@ -367,10 +367,10 @@ exports.OAuth = (function (global) {
 
                         if (!!xhr.getAllResponseHeaders) {
                             responseHeadersString = xhr.getAllResponseHeaders();
-                            while ((match = regex.exec(responseHeadersString))) {
+                            while((match = regex.exec(responseHeadersString))) {
                                 responseHeaders[match[1]] = match[2];
                             }
-                        } else if (!!xhr.getResponseHeaders) {
+                        } else if(!!xhr.getResponseHeaders) {
                             responseHeadersString = xhr.getResponseHeaders();
                             for (var i = 0, len = responseHeadersString.length; i < len; ++i) {
                                 responseHeaders[responseHeadersString[i][0]] = responseHeadersString[i][1];
@@ -378,19 +378,21 @@ exports.OAuth = (function (global) {
                         }
 
                         var includeXML = false;
-                        if ('Content-Type' in responseHeaders) {
-                            if (responseHeaders['Content-Type'] == 'text/xml') {
+                        if ('Content-Type' in responseHeaders)
+                        {
+                            if (responseHeaders['Content-Type'] == 'text/xml')
+                            {
                                 includeXML = true;
                             }
 
                         }
-                        var responseObject = { text: xhr.responseText, xml: (includeXML ? xhr.responseXML : ''), requestHeaders: requestHeaders, responseHeaders: responseHeaders };
+                        var responseObject = {text: xhr.responseText, xml: (includeXML ? xhr.responseXML : ''), requestHeaders: requestHeaders, responseHeaders: responseHeaders};
 
                         // we are powerless against 3xx redirects
-                        if ((xhr.status >= 200 && xhr.status <= 226) || xhr.status == 304 || xhr.status === 0) {
+                        if((xhr.status >= 200 && xhr.status <= 226) || xhr.status == 304 || xhr.status === 0) {
                             success(responseObject);
-                            // everything what is 400 and above is a failure code
-                        } else if (xhr.status >= 400 && xhr.status !== 0) {
+                        // everything what is 400 and above is a failure code
+                        } else if(xhr.status >= 400 && xhr.status !== 0) {
                             failure(responseObject);
                         }
                     }
@@ -420,7 +422,7 @@ exports.OAuth = (function (global) {
                 // multipart the POST data doesn't
                 // have to be signed:
                 // http://www.mail-archive.com/oauth@googlegroups.com/msg01556.html
-                if ((!('Content-Type' in headers) || headers['Content-Type'] == 'application/x-www-form-urlencoded') && !withFile) {
+                if((!('Content-Type' in headers) || headers['Content-Type'] == 'application/x-www-form-urlencoded') && !withFile) {
                     for (i in data) {
                         signatureData[i] = data[i];
                     }
@@ -433,7 +435,8 @@ exports.OAuth = (function (global) {
 
                 headerParams.oauth_signature = signature;
 
-                if (this.realm) {
+                if (this.realm)
+                {
                     headerParams['realm'] = this.realm;
                 }
 
@@ -441,17 +444,17 @@ exports.OAuth = (function (global) {
                     url = URI(oauth.proxyUrl + url.path);
                 }
 
-                if (appendQueryString || method == 'GET') {
+                if(appendQueryString || method == 'GET') {
                     url.query.setQueryParams(data);
                     query = null;
-                } else if (!withFile) {
+                } else if(!withFile){
                     if (typeof data == 'string') {
                         query = data;
                         if (!('Content-Type' in headers)) {
                             headers['Content-Type'] = 'text/plain';
                         }
                     } else {
-                        for (i in data) {
+                        for(i in data) {
                             query.push(OAuth.urlEncode(i) + '=' + OAuth.urlEncode(data[i] + ''));
                         }
                         query = query.sort().join('&');
@@ -460,20 +463,20 @@ exports.OAuth = (function (global) {
                         }
                     }
 
-                } else if (withFile) {
+                } else if(withFile) {
                     // When using FormData multipart content type
                     // is used by default and required header
                     // is set to multipart/form-data etc
                     query = new FormData();
-                    for (i in data) {
+                    for(i in data) {
                         query.append(i, data[i]);
                     }
                 }
 
-                xhr.open(method, url + '', true);
+                xhr.open(method, url+'', true);
 
                 xhr.setRequestHeader('Authorization', 'OAuth ' + toHeaderString(headerParams));
-                xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                xhr.setRequestHeader('X-Requested-With','XMLHttpRequest');
                 for (i in headers) {
                     xhr.setRequestHeader(i, headers[i]);
                 }
@@ -485,37 +488,37 @@ exports.OAuth = (function (global) {
         },
 
         /**
-        * Wrapper for GET OAuth.request
-        *
-        * @param url {string} vaild http(s) url
-        * @param success {function} callback for a successful request
-        * @param failure {function} callback for a failed request
-        */
+         * Wrapper for GET OAuth.request
+         *
+         * @param url {string} vaild http(s) url
+         * @param success {function} callback for a successful request
+         * @param failure {function} callback for a failed request
+         */
         get: function (url, success, failure) {
-            this.request({ 'url': url, 'success': success, 'failure': failure });
+            this.request({'url': url, 'success': success, 'failure': failure});
         },
 
         /**
-        * Wrapper for POST OAuth.request
-        *
-        * @param url {string} vaild http(s) url
-        * @param data {object} A key value paired object of data
-        *                      example: {'q':'foobar'}
-        *                      for GET this will append a query string
-        * @param success {function} callback for a successful request
-        * @param failure {function} callback for a failed request
-        */
+         * Wrapper for POST OAuth.request
+         *
+         * @param url {string} vaild http(s) url
+         * @param data {object} A key value paired object of data
+         *                      example: {'q':'foobar'}
+         *                      for GET this will append a query string
+         * @param success {function} callback for a successful request
+         * @param failure {function} callback for a failed request
+         */
         post: function (url, data, success, failure) {
-            this.request({ 'method': 'POST', 'url': url, 'data': data, 'success': success, 'failure': failure });
+            this.request({'method': 'POST', 'url': url, 'data': data, 'success': success, 'failure': failure});
         },
 
         /**
-        * Wrapper to parse a JSON string and pass it to the callback
-        *
-        * @param url {string} vaild http(s) url
-        * @param success {function} callback for a successful request
-        * @param failure {function} callback for a failed request
-        */
+         * Wrapper to parse a JSON string and pass it to the callback
+         *
+         * @param url {string} vaild http(s) url
+         * @param success {function} callback for a successful request
+         * @param failure {function} callback for a failed request
+         */
         getJSON: function (url, success, failure) {
             this.get(url, function (data) {
                 success(JSON.parse(data.text));
@@ -523,12 +526,12 @@ exports.OAuth = (function (global) {
         },
 
         /**
-        * Wrapper to parse a JSON string and pass it to the callback
-        *
-        * @param url {string} vaild http(s) url
-        * @param success {function} callback for a successful request
-        * @param failure {function} callback for a failed request
-        */
+         * Wrapper to parse a JSON string and pass it to the callback
+         *
+         * @param url {string} vaild http(s) url
+         * @param success {function} callback for a successful request
+         * @param failure {function} callback for a failed request
+         */
         postJSON: function (url, data, success, failure) {
             this.request({
                 'method': 'POST',
@@ -546,7 +549,8 @@ exports.OAuth = (function (global) {
 
         parseTokenRequest: function (tokenRequest, content_type) {
 
-            switch (content_type) {
+            switch(content_type)
+            {
                 case "text/xml":
                     var token = tokenRequest.xml.getElementsByTagName('token');
                     var secret = tokenRequest.xml.getElementsByTagName('secret');
@@ -580,7 +584,7 @@ exports.OAuth = (function (global) {
 
         fetchAccessToken: function (success, failure) {
             var oauth = this;
-            this.post(this.accessTokenUrl, '', function (data) {
+            this.get(this.accessTokenUrl, function (data) {
                 var token = oauth.parseTokenRequest(data, data.responseHeaders['Content-Type'] || undefined);
                 oauth.setAccessToken([token.oauth_token, token.oauth_token_secret]);
 
@@ -594,12 +598,12 @@ exports.OAuth = (function (global) {
 
     OAuth.signatureMethod = {
         /**
-        * Sign the request
-        *
-        * @param consumer_secret {string} the consumer secret
-        * @param token_secret {string}  the token secret
-        * @param signature_base {string}  the signature base string
-        */
+         * Sign the request
+         *
+         * @param consumer_secret {string} the consumer secret
+         * @param token_secret {string}  the token secret
+         * @param signature_base {string}  the signature base string
+         */
         'HMAC-SHA1': function (consumer_secret, token_secret, signature_base) {
             var passphrase, signature, encode = OAuth.urlEncode;
 
@@ -614,12 +618,12 @@ exports.OAuth = (function (global) {
     };
 
     /**
-    * Get a string of the parameters for the OAuth Authorization header
-    *
-    * @param params {object} A key value paired object of data
-    *                           example: {'q':'foobar'}
-    *                           for GET this will append a query string
-    */
+     * Get a string of the parameters for the OAuth Authorization header
+     *
+     * @param params {object} A key value paired object of data
+     *                           example: {'q':'foobar'}
+     *                           for GET this will append a query string
+     */
     function toHeaderString(params) {
         var arr = [], i, realm;
 
@@ -628,7 +632,7 @@ exports.OAuth = (function (global) {
                 if (i === 'realm') {
                     realm = i + '="' + params[i] + '"';
                 } else {
-                    arr.push(i + '="' + OAuth.urlEncode(params[i] + '') + '"');
+                    arr.push(i + '="' + OAuth.urlEncode(params[i]+'') + '"');
                 }
             }
         }
@@ -638,25 +642,25 @@ exports.OAuth = (function (global) {
             arr.unshift(realm);
         }
 
-        return arr.join(',');
+        return arr.join(', ');
     }
 
     /**
-    * Generate a signature base string for the request
-    *
-    * @param method {string} ['GET', 'POST', 'PUT', ...]
-    * @param url {string} A valid http(s) url
-    * @param header_params A key value paired object of additional headers
-    * @param query_params {object} A key value paired object of data
-    *                               example: {'q':'foobar'}
-    *                               for GET this will append a query string
-    */
+     * Generate a signature base string for the request
+     *
+     * @param method {string} ['GET', 'POST', 'PUT', ...]
+     * @param url {string} A valid http(s) url
+     * @param header_params A key value paired object of additional headers
+     * @param query_params {object} A key value paired object of data
+     *                               example: {'q':'foobar'}
+     *                               for GET this will append a query string
+     */
     function toSignatureBaseString(method, url, header_params, query_params) {
         var arr = [], i, encode = OAuth.urlEncode;
 
         for (i in header_params) {
             if (header_params[i] !== undefined && header_params[i] !== '') {
-                arr.push([OAuth.urlEncode(i), OAuth.urlEncode(header_params[i] + '')]);
+                arr.push([OAuth.urlEncode(i), OAuth.urlEncode(header_params[i]+'')]);
             }
         }
 
@@ -668,22 +672,22 @@ exports.OAuth = (function (global) {
             }
         }
 
-        arr = arr.sort(function (a, b) {
-            if (a[0] < b[0]) {
-                return -1;
-            } else if (a[0] > b[0]) {
-                return 1;
+        arr = arr.sort(function(a, b) {
+          if (a[0] < b[0]) {
+            return -1;
+          } else if (a[0] > b[0]) {
+            return 1;
+          } else {
+            if (a[1] < b[1]) {
+              return -1;
+            } else if (a[1] > b[1]) {
+              return 1;
             } else {
-                if (a[1] < b[1]) {
-                    return -1;
-                } else if (a[1] > b[1]) {
-                    return 1;
-                } else {
-                    return 0;
-                }
+              return 0;
             }
-        }).map(function (el) {
-            return el.join("=");
+          }
+        }).map(function(el) {
+          return el.join("=");
         });
 
         return [
@@ -694,17 +698,17 @@ exports.OAuth = (function (global) {
     }
 
     /**
-    * Generate a timestamp for the request
-    */
+     * Generate a timestamp for the request
+     */
     function getTimestamp() {
         return parseInt(+new Date() / 1000, 10); // use short form of getting a timestamp
     }
 
     /**
-    * Generate a nonce for the request
-    *
-    * @param key_length {number} Optional nonce length
-    */
+     * Generate a nonce for the request
+     *
+     * @param key_length {number} Optional nonce length
+     */
     function getNonce(key_length) {
         function rand() {
             return Math.floor(Math.random() * chars.length);
@@ -726,7 +730,7 @@ exports.OAuth = (function (global) {
                      '7A', '7B', '7C', '7D', '7E'];
 
         for (i = 0; i < key_iter; i++) {
-            value += chars[rand()] + chars[rand()] + chars[rand()] + chars[rand()];
+            value += chars[rand()] + chars[rand()] + chars[rand()]+ chars[rand()];
         }
 
         // handle remaing bytes
@@ -738,10 +742,10 @@ exports.OAuth = (function (global) {
     }
 
     /**
-    * rfc3986 compatable encode of a string
-    *
-    * @param {String} string
-    */
+     * rfc3986 compatable encode of a string
+     *
+     * @param {String} string
+     */
     OAuth.urlEncode = function (string) {
         function hex(code) {
             var hex = code.toString(16).toUpperCase();
@@ -766,11 +770,11 @@ exports.OAuth = (function (global) {
                 if (c < 128) {
                     string_arr[i] = hex(c);
                 } else if (c < 2048) {
-                    string_arr[i] = hex(192 + (c >> 6)) + hex(128 + (c & 63));
+                    string_arr[i] = hex(192+(c>>6)) + hex(128+(c&63));
                 } else if (c < 65536) {
-                    string_arr[i] = hex(224 + (c >> 12)) + hex(128 + ((c >> 6) & 63)) + hex(128 + (c & 63));
+                    string_arr[i] = hex(224+(c>>12)) + hex(128+((c>>6)&63)) + hex(128+(c&63));
                 } else if (c < 2097152) {
-                    string_arr[i] = hex(240 + (c >> 18)) + hex(128 + ((c >> 12) & 63)) + hex(128 + ((c >> 6) & 63)) + hex(128 + (c & 63));
+                    string_arr[i] = hex(240+(c>>18)) + hex(128+((c>>12)&63)) + hex(128+((c>>6)&63)) + hex(128+(c&63));
                 }
             }
         }
@@ -779,11 +783,11 @@ exports.OAuth = (function (global) {
     };
 
     /**
-    * rfc3986 compatable decode of a string
-    *
-    * @param {String} string
-    */
-    OAuth.urlDecode = function (string) {
+     * rfc3986 compatable decode of a string
+     *
+     * @param {String} string
+     */
+    OAuth.urlDecode = function (string){
         if (!string) {
             return '';
         }
@@ -793,8 +797,8 @@ exports.OAuth = (function (global) {
         });
     };
     /**
-    * Factory object for XMLHttpRequest
-    */
+     * Factory object for XMLHttpRequest
+     */
     function Request() {
         var XHR;
 
@@ -830,17 +834,17 @@ exports.OAuth = (function (global) {
     function stringToByteArray(str) {
         var bytes = [], code, i;
 
-        for (i = 0; i < str.length; i++) {
+        for(i = 0; i < str.length; i++) {
             code = str.charCodeAt(i);
 
             if (code < 128) {
                 bytes.push(code);
             } else if (code < 2048) {
-                bytes.push(192 + (code >> 6), 128 + (code & 63));
+                bytes.push(192+(code>>6), 128+(code&63));
             } else if (code < 65536) {
-                bytes.push(224 + (code >> 12), 128 + ((code >> 6) & 63), 128 + (code & 63));
+                bytes.push(224+(code>>12), 128+((code>>6)&63), 128+(code&63));
             } else if (code < 2097152) {
-                bytes.push(240 + (code >> 18), 128 + ((code >> 12) & 63), 128 + ((code >> 6) & 63), 128 + (code & 63));
+                bytes.push(240+(code>>18), 128+((code>>12)&63), 128+((code>>6)&63), 128+(code&63));
             }
         }
 
@@ -884,7 +888,7 @@ exports.OAuth = (function (global) {
             }
 
             if (!(this instanceof SHA1)) {
-                crypto = new SHA1(message);
+                crypto =  new SHA1(message);
             } else {
                 crypto = this;
             }
@@ -950,7 +954,7 @@ exports.OAuth = (function (global) {
         blocks = Math.ceil(m.length / this.blocksize);
 
         for (b = 0; b < blocks; b++) {
-            block = m.slice(b * this.blocksize, (b + 1) * this.blocksize);
+            block = m.slice(b * this.blocksize, (b+1) * this.blocksize);
             bl = block.length;
 
             w = [];
@@ -965,19 +969,19 @@ exports.OAuth = (function (global) {
             D = H[3];
             E = H[4];
 
-            for (t = 0; t < 80; t++) {
-                if (t >= 16) {
-                    w[t] = leftrotate(w[t - 3] ^ w[t - 8] ^ w[t - 14] ^ w[t - 16], 1);
-                }
+            for (t=0; t < 80; t++) {
+            if (t >= 16) {
+                w[t] = leftrotate(w[t-3] ^ w[t-8] ^ w[t-14] ^ w[t-16], 1);
+            }
 
-                n = Math.floor(t / 20);
-                TEMP = leftrotate(A, 5) + fn(n, B, C, D) + E + K[n] + w[t];
+            n = Math.floor(t / 20);
+            TEMP = leftrotate(A, 5) + fn(n, B, C, D) + E + K[n] + w[t];
 
-                E = D;
-                D = C;
-                C = leftrotate(B, 30);
-                B = A;
-                A = TEMP;
+            E = D;
+            D = C;
+            C = leftrotate(B, 30);
+            B = A;
+            A = TEMP;
             }
 
             H[0] += A;
@@ -990,7 +994,7 @@ exports.OAuth = (function (global) {
         return wordsToByteArray(H);
     };
 
-    function HMAC(fn, key, message, toHex) {
+    function HMAC(fn, key, message, toHex){
         var k = stringToByteArray(key), m = stringToByteArray(message),
             l = k.length, byteArray, oPad, iPad, i;
 
@@ -1024,17 +1028,17 @@ var exports = exports || this;
     var b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
     /**
-    * Base64 encode a string
-    * @param string {string} the string to be base64 encoded
-    */
+     * Base64 encode a string
+     * @param string {string} the string to be base64 encoded
+     */
     global.btoa = global.btoa || function (string) {
         var i = 0, length = string.length, ascii, index, output = '';
 
-        for (; i < length; i += 3) {
+        for (; i < length; i+=3) {
             ascii = [
                 string.charCodeAt(i),
-                string.charCodeAt(i + 1),
-                string.charCodeAt(i + 2)
+                string.charCodeAt(i+1),
+                string.charCodeAt(i+2)
             ];
 
             index = [
