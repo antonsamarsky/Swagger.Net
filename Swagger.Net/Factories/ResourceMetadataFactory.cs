@@ -23,7 +23,7 @@ namespace Swagger.Net.Factories
         #region --- fields & ctors ---
 
         private readonly string _appVirtualPath;
-        private readonly XmlCommentDocumentationProvider _docProvider;
+        private readonly SwaggerXmlCommentDocumentationProvider _docProvider;
         private readonly ParameterMetadataFactory _parameterFactory;
         private readonly ICollection<ApiDescription> _apiDescriptions;
         private readonly ModelMetadataFactory _modelFactory;
@@ -34,11 +34,11 @@ namespace Swagger.Net.Factories
             _apiDescriptions = GlobalConfiguration.Configuration.Services.GetApiExplorer().ApiDescriptions;
             _parameterFactory = new ParameterMetadataFactory();
 
-            _docProvider = (XmlCommentDocumentationProvider)GlobalConfiguration.Configuration.Services.GetService((typeof(IDocumentationProvider)));
+            _docProvider = (SwaggerXmlCommentDocumentationProvider)GlobalConfiguration.Configuration.Services.GetService((typeof(IDocumentationProvider)));
             _modelFactory = new ModelMetadataFactory(_docProvider);
         }
 
-        public ResourceMetadataFactory(string virtualPath, XmlCommentDocumentationProvider docProvider, ParameterMetadataFactory parameterFactory, ModelMetadataFactory modelFactory,  ICollection<ApiDescription> apiDescriptions)
+        public ResourceMetadataFactory(string virtualPath, SwaggerXmlCommentDocumentationProvider docProvider, ParameterMetadataFactory parameterFactory, ModelMetadataFactory modelFactory,  ICollection<ApiDescription> apiDescriptions)
         {
             _apiDescriptions = apiDescriptions;
             _modelFactory = modelFactory;

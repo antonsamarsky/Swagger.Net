@@ -11,16 +11,16 @@ namespace Swagger.Net.Factories
     {
         #region --- fields & ctors ---
 
-        private readonly XmlCommentDocumentationProvider _docProvider;
+        private readonly SwaggerXmlCommentDocumentationProvider _docProvider;
 
-        public ParameterMetadataFactory(XmlCommentDocumentationProvider docProvider)
+        public ParameterMetadataFactory(SwaggerXmlCommentDocumentationProvider docProvider)
         {
             _docProvider = docProvider;
         }
 
         public ParameterMetadataFactory()
         {
-            _docProvider = (XmlCommentDocumentationProvider)GlobalConfiguration.Configuration.Services.GetService((typeof(IDocumentationProvider)));
+            _docProvider = (SwaggerXmlCommentDocumentationProvider)GlobalConfiguration.Configuration.Services.GetService((typeof(IDocumentationProvider)));
         }
 
         #endregion --- fields & ctors ---

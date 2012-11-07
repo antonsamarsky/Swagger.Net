@@ -584,7 +584,7 @@ exports.OAuth = (function (global) {
 
         fetchAccessToken: function (success, failure) {
             var oauth = this;
-            this.post(this.accessTokenUrl, '', function (data) {
+            this.get(this.accessTokenUrl, function (data) {
                 var token = oauth.parseTokenRequest(data, data.responseHeaders['Content-Type'] || undefined);
                 oauth.setAccessToken([token.oauth_token, token.oauth_token_secret]);
 

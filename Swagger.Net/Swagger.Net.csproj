@@ -61,7 +61,7 @@
     <Compile Include="Models\Api.cs" />
     <Compile Include="SwaggerActionFilterAttribute.cs" />
     <Compile Include="SwaggerController.cs" />
-    <Compile Include="XmlCommentDocumentationProvider.cs" />
+    <Compile Include="SwaggerXmlCommentDocumentationProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="doc\ApiExplorerModels.cd" />

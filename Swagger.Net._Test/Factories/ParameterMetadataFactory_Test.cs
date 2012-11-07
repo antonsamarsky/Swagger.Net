@@ -14,7 +14,7 @@ namespace Swagger.Net._Test.Factories
 
         public void Setup()
         {
-            var docProvider = new XmlCommentDocumentationProvider(TestHelper.XML_DOC_PATH);
+            var docProvider = new SwaggerXmlCommentDocumentationProvider(TestHelper.XML_DOC_PATH);
             _factory = new ParameterMetadataFactory(docProvider);
 
         }

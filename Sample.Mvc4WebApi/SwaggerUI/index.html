@@ -54,8 +54,9 @@
     </style>
     <script type="text/javascript">
         $(function () {
+            // /api/swagger
             window.swaggerUi = new SwaggerUi({
-                discoveryUrl: "/api/swagger",
+                discoveryUrl: "https://api.pps.io/v1/api/docs/payment",
                 apiKey: "",
                 dom_id: "swagger-ui-container",
                 supportHeaderParams: false,
@@ -128,13 +129,13 @@
     <script type="text/javascript">
 
         $(function () {
+            // https://api.pps.io/v1/pci
+            // var merchId = "100001322";
 
-            var merchId = "10001322";
-            
             // Config loaded from app_config.js
             var config = window.APP.config;
-            
-            
+
+
             var oauth = OAuth({
                 consumerKey: config.consumerKey,
                 consumerSecret: config.consumerSecret,
@@ -142,10 +143,11 @@
                 requestTokenUrl: config.requestTokenUrl
             });
 
+            // display consumer key and secret
             $('#consumer_key').val(config.consumerKey);
             $('#consumer_secret').val(config.consumerSecret);
 
-            //'https://api.pps.io/v1/pci',
+
 
             $('#btn_fetch_access').click(function (ev) {
                 ev.preventDefault();
@@ -162,7 +164,17 @@
                     $('#access_token_secret').val(secret);
 
                     console.log(JSON.stringify(data));
+
+                    oauth.setAccessToken(key, secret);
+                    $.ajax = function (options) {
+                        console.log(options);
+                        oauth.request(options);
+                        console.log("ajax2");
+
+                    };
                 };
+
+                // todo: grab key and secret from textboxes.
 
                 oauth.fetchAccessToken(displayAccesToken, function (err) {
                     console.log(JSON.stringify(err));

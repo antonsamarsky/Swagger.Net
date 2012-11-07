@@ -34,7 +34,7 @@ namespace Sample.Mvc4WebApi
                 {
                     var assemblyname = Assembly.GetAssembly(baseType).GetName().Name;
                     var path = HttpContext.Current.Server.MapPath("~/bin/" + assemblyname + ".xml");
-                    var docProvider = new XmlCommentDocumentationProvider(path);
+                    var docProvider = new SwaggerXmlCommentDocumentationProvider(path);
                     config.Services.Replace(typeof(IDocumentationProvider), docProvider);
                 }
 

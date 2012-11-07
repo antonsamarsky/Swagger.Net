@@ -1,9 +1,13 @@
 ﻿(function () {
 
+    var secrets = {
+        consumerKey: "ppsdemo",
+        consumerSecret: "zp7FiFnWa6CCfeejhsLOkBELSa0="
+    };
     
     var config = {
-        consumerKey: secrets.oldKey,
-        consumerSecret: secrets.oldSecret,
+        consumerKey: secrets.consumerKey,
+        consumerSecret: secrets.consumerSecret,
         requestTokenUrl: "https://api.pps.io/v1/OAuth/1A/RequestToken",
         accessTokenUrl: "https://api.pps.io/v1/OAuth/1A/AccessToken",
         authorizeTokenUrl: "https://api.pps.io/v1/OAuth/1A/AuthorizeToken", // not implemented.  returns nil

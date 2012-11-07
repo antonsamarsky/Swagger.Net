@@ -9,11 +9,11 @@ namespace Swagger.Net._Test
     [TestClass]
     public class DocumentationProvider_Test
     {
-        private XmlCommentDocumentationProvider _docProvider;
+        private SwaggerXmlCommentDocumentationProvider _docProvider;
 
         public void Setup()
         {
-            _docProvider = new XmlCommentDocumentationProvider(TestHelper.XML_DOC_PATH);
+            _docProvider = new SwaggerXmlCommentDocumentationProvider(TestHelper.XML_DOC_PATH);
         }
         [TestMethod]
         public void GetModels()
