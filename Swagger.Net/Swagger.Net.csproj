@@ -50,17 +50,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Factories\ModelMetadataFactory.cs" />
-    <Compile Include="Factories\ParameterMetadataFactory.cs" />
-    <Compile Include="Factories\ResourceMetadataFactory.cs" />
+    <Compile Include="DocsController.cs" />
+    <Compile Include="Adapters\ModelAdapter.cs" />
+    <Compile Include="Adapters\ParameterAdapter.cs" />
+    <Compile Include="Adapters\ApiAdapter.cs" />
     <Compile Include="Models\Model.cs" />
     <Compile Include="Models\ResourceListing.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Factories\EndpointMetadataFactory.cs" />
+    <Compile Include="Adapters\ResourceAdapter.cs" />
     <Compile Include="G.cs" />
     <Compile Include="Models\Api.cs" />
-    <Compile Include="SwaggerActionFilterAttribute.cs" />
-    <Compile Include="SwaggerController.cs" />
     <Compile Include="SwaggerXmlCommentDocumentationProvider.cs" />
   </ItemGroup>
   <ItemGroup>

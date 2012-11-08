@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Swagger.Net.Models;
 
 namespace Swagger.Net
 {
@@ -27,7 +28,7 @@ namespace Swagger.Net
     {
         public ResourceListing()
         {
-            this.apis = new List<ResourceSummary>();
+            this.apis = new List<Resource>();
         }
 
         /// <summary>
@@ -54,33 +55,12 @@ namespace Swagger.Net
         /// <summary>
         /// Source:  GlobalConfiguration.Configuration.Services.GetApiExplorer().ApiDescriptions
         /// </summary>
-        public List<ResourceSummary> apis { get; private set; }
+        public List<Resource> apis { get; private set; }
     }
 
-
-   
-    /// <summary>
-    /// Source: GlobalConfiguration.Configuration.Services.GetApiExplorer().ApiDescriptions
-    /// </summary>
-    /// <example>
-    ///     apis:[
-    ///      {
-    ///        path          :"/pet.{format}",
-    ///        description   :"Operations about pets",
-    ///      }
-    ///    ] 
-    /// </example>
-    public class ResourceSummary
+    public class Resource
     {
-        /// <summary>
-        /// Source:  ApiDescription.RelativePath
-        /// </summary>
         public string path { get; set; }
-
-        /// <summary>
-        /// Source: ApiDescription.Documentation 
-        ///     passes thru to: XmlCommentDocumentationProvider.GetDocumentation(HttpActionDescriptor actionDescriptor)
-        /// </summary>
         public string description { get; set; }
     }
 

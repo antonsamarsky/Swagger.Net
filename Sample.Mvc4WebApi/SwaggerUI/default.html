@@ -38,6 +38,7 @@
         {
             color: #cc0000;
         }
+
         #oauth-creds-form label
         {
             width: 150px;
@@ -50,6 +51,12 @@
             font-size: 10px;
             padding: 2px;
             margin: 2px;
+        }
+        #data-links li
+        {
+            margin-top: 4px !important;
+            
+
         }
     </style>
     <script type="text/javascript">
@@ -85,11 +92,20 @@
             <div class='input'>
                 <a id="explore" href="#">Explore</a></div>
             </form>
+            <div>
+                <ul id="data-links">
+                    <li><a href="/api/docs" target="_blank">/api/docs</a> </li>
+                    <li><a href="/api/docs/Values" target="_blank">/api/docs/Values</a> </li>
+                    <li><a href="/api/docs/BlogPosts" target="_blank">/api/docs/BlogPosts</a> </li>
+                </ul>
+            </div>
+
         </div>
     </div>
     <div id="message-bar" class="swagger-ui-wrap">
         &nbsp;
     </div>
+<<<<<<< HEAD:Sample.Mvc4WebApi/SwaggerUI/index.html
     <div id="oauth-creds" class="swagger-ui-wrap">
         <form id='oauth-creds-form'>
         <div style="width: 43%; display: inline-block">
@@ -183,5 +199,9 @@
         });
 
     </script>
+=======
+    <div id="swagger-ui-container" class="swagger-ui-wrap">
+    </div>
+>>>>>>> master:Sample.Mvc4WebApi/SwaggerUI/default.html
 </body>
 </html>

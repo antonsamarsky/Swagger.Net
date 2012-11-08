@@ -6,32 +6,37 @@ using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Newtonsoft.Json;
 using Swagger.Net.Factories;
 using Swagger.Net.Models;
 
 namespace Swagger.Net
 {
-
-    public class SwaggerController : ApiController
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public class DocsController : ApiController
     {
         #region --- fields & ctors ---
 
-        private readonly EndpointMetadataFactory _resourceFactory;
+        private readonly ApiAdapter _apiAdapter;
+        private readonly ResourceAdapter _resourceAdapter;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SwaggerController"/> class.
+        /// Initializes a new instance of the <see cref="DocsController"/> class.
         /// </summary>
-        public SwaggerController()
+        public DocsController()
         {
-            _resourceFactory = new EndpointMetadataFactory();
+            _resourceAdapter = new ResourceAdapter();
+            _apiAdapter = new ApiAdapter();
+            
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SwaggerController"/> class.
+        /// Initializes a new instance of the <see cref="DocsController"/> class.
         /// </summary>
-        public SwaggerController(EndpointMetadataFactory resourceFactory)
+        public DocsController(ResourceAdapter resourceAdapter, ApiAdapter apiAdapter)
         {
-            _resourceFactory = resourceFactory;
+            _resourceAdapter = resourceAdapter;
+            _apiAdapter = apiAdapter;  
         }
 
         #endregion --- fields & ctors ---
@@ -48,25 +53,37 @@ namespace Swagger.Net
             var uri = base.ControllerContext.Request.RequestUri;
 
             // Act
-            var resourceListing = _resourceFactory.CreateResourceListing(uri);
-            
+            var resourceListing = _resourceAdapter.CreateResourceListing(uri);
+
             //Answer
             var resp = WrapResponse(resourceListing);
             return resp;
         }
 
-        private HttpResponseMessage WrapResponse(ResourceListing resourceListing)
+        public HttpResponseMessage Get(string id)
         {
-            var content = FormatContent(resourceListing);
+            // Arrange
+            var rootUrl = Request.RequestUri.GetLeftPart(UriPartial.Authority);
+
+            // Act
+            var docs = _apiAdapter.GetDocs(rootUrl, id);
+
+            //Answer
+            return WrapResponse(docs);
+        }
+
+        private HttpResponseMessage WrapResponse<T>(T resourceListing)
+        {
+            var content = FormatContent<T>(resourceListing);
 
             var resp = new HttpResponseMessage {Content = content};
             return resp;
         }
 
-        private ObjectContent<ResourceListing> FormatContent(ResourceListing resourceListing)
+        private ObjectContent<T> FormatContent<T>(T resourceListing)
         {
             var formatter = ControllerContext.Configuration.Formatters.JsonFormatter;
-            var content = new ObjectContent<ResourceListing>(resourceListing, formatter);
+            var content = new ObjectContent<T>(resourceListing, formatter);
             return content;
         }
     }

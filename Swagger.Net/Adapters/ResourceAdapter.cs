@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Routing;
+using Swagger.Net.Models;
 
 namespace Swagger.Net.Factories
 {
@@ -13,21 +15,21 @@ namespace Swagger.Net.Factories
     /// -----------------------------------------
     /// | EndpointMetadata  | Resource Listing  |
     /// </summary>
-    public class EndpointMetadataFactory
+    public class ResourceAdapter
     {
 
         #region --- fields & ctors ---
 
-        private string _appVirtualPath;
-        private IEnumerable<ApiDescription> _apiDescriptions;
+        private readonly string _appVirtualPath;
+        private readonly IEnumerable<ApiDescription> _apiDescriptions;
 
-        public EndpointMetadataFactory()
+        public ResourceAdapter()
         {
             _appVirtualPath = HttpRuntime.AppDomainAppVirtualPath.TrimEnd('/');
             _apiDescriptions = GlobalConfiguration.Configuration.Services.GetApiExplorer().ApiDescriptions;
         }
 
-        public EndpointMetadataFactory(string appVirtualPath, IEnumerable<ApiDescription> apiDescs)
+        public ResourceAdapter(string appVirtualPath, IEnumerable<ApiDescription> apiDescs)
         {
             _appVirtualPath = appVirtualPath.TrimEnd('/'); 
             _apiDescriptions = apiDescs;
@@ -46,7 +48,9 @@ namespace Swagger.Net.Factories
                 basePath = uri.GetLeftPart(UriPartial.Authority) + _appVirtualPath,
             };
 
-            var apis = CreateApiElements(_apiDescriptions);
+            
+            var apis = CreateResourceElements(_apiDescriptions);
+            
             foreach (var resourceSummary in apis)
             {
                 rtnListing.apis.Add(resourceSummary);
@@ -55,24 +59,20 @@ namespace Swagger.Net.Factories
             return rtnListing;
         }
 
-        public IList<ResourceSummary> CreateApiElements(IEnumerable<ApiDescription> apiDescs)
+        public IList<Resource> CreateResourceElements(IEnumerable<ApiDescription> apiDescs)
         {
-            var rtnApis = new Dictionary<String, ResourceSummary>();
+            var rtnApis = new Dictionary<String, Resource>();
 
             foreach (var desc in apiDescs)
             {
                 var ctlrName = desc.ActionDescriptor.ControllerDescriptor.ControllerName;
 
-                // skip swagger controller and items already in dictionary.
-                if (IsSwaggerController(ctlrName) || rtnApis.ContainsKey(ctlrName))
+                if (!rtnApis.ContainsKey(ctlrName))
                 {
-                    // do nothing
-                }
-                else
-                {
-                    var res = new ResourceSummary
+                    var res = new Resource
                     {
-                        path = "/" + desc.RelativePath,
+                        // todo: this is returning url with query string parameters only if first method has param(s)
+                        path = GetPath(desc),
                         description = desc.Documentation
                     };
                     rtnApis.Add(ctlrName, res);
@@ -82,9 +82,21 @@ namespace Swagger.Net.Factories
             return rtnApis.Values.ToList();
         }
 
-        private static bool IsSwaggerController(string ctlrName)
+        private static string GetPath(ApiDescription desc)
         {
-            return ctlrName.ToUpper() == G.SWAGGER.ToUpper();
+            return "/api/docs/" + desc.ActionDescriptor.ControllerDescriptor.ControllerName;
+            //string path;
+            //var questionIndex = desc.RelativePath.IndexOf("?");
+            //if (questionIndex < 1)
+            //{
+            //    path = desc.RelativePath;
+            //}
+            //else
+            //{
+            //    path = desc.RelativePath.Substring(0, questionIndex);
+            //}
+            //return path;
         }
+
     }
 }
