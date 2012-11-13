@@ -25,8 +25,7 @@ namespace Swagger.Net
             foreach (var api in GlobalConfiguration.Configuration.Services.GetApiExplorer().ApiDescriptions)
             {
                 string controllerName = api.ActionDescriptor.ControllerDescriptor.ControllerName;
-                if (uniqueControllers.Contains(controllerName) ||
-                      controllerName.ToUpper().Equals(SwaggerGen.SWAGGER.ToUpper())) continue;
+                if (uniqueControllers.Contains(controllerName)) continue;
 
                 uniqueControllers.Add(controllerName);
 
