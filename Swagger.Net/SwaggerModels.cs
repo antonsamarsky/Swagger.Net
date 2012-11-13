@@ -29,6 +29,20 @@ namespace Swagger.Net
             return CreateResourceListing(actionContext.ControllerContext, includeResourcePath);
         }
 
+        public static ResourceListing CreateResourceListing(Uri uri, string controllerName, bool includeResourcePath = false)
+        {
+            ResourceListing rl = new ResourceListing()
+            {
+                apiVersion = Assembly.GetCallingAssembly().GetType().Assembly.GetName().Version.ToString(),
+                swaggerVersion = SWAGGER_VERSION,
+                basePath = uri.GetLeftPart(UriPartial.Authority) + HttpRuntime.AppDomainAppVirtualPath.TrimEnd('/') + @"/api",
+                apis = new List<ResourceApi>()
+            };
+
+            if (includeResourcePath) rl.resourcePath = controllerName;
+
+            return rl;
+        }
         /// <summary>
         /// Create a resource listing
         /// </summary>
@@ -43,7 +57,7 @@ namespace Swagger.Net
             {
                 apiVersion = Assembly.GetCallingAssembly().GetType().Assembly.GetName().Version.ToString(),
                 swaggerVersion = SWAGGER_VERSION,
-                basePath = uri.GetLeftPart(UriPartial.Authority) + HttpRuntime.AppDomainAppVirtualPath.TrimEnd('/'),
+                basePath = uri.GetLeftPart(UriPartial.Authority) + HttpRuntime.AppDomainAppVirtualPath.TrimEnd('/') + @"/api/docs",
                 apis = new List<ResourceApi>()
             };
 
@@ -61,7 +75,7 @@ namespace Swagger.Net
         {
             ResourceApi rApi = new ResourceApi()
             {
-                path = "/" + api.RelativePath,
+                path =  "/" + api.ActionDescriptor.ControllerDescriptor.ControllerName,
                 description = api.Documentation,
                 operations = new List<ResourceApiOperation>()
             };
